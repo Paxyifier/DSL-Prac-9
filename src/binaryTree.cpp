@@ -80,6 +80,7 @@ class BinarySearchTree{
         }
         void display(){
             display(root);
+            cout << endl;
         }
         void display(Node *node){
             if(node != NULL){
@@ -90,6 +91,7 @@ class BinarySearchTree{
         }
         void preOrder(){
             preOrder(root);
+            cout << endl;
         }
         void preOrder(Node *node){
             if(node != NULL){
@@ -100,6 +102,7 @@ class BinarySearchTree{
         }
         void inOrder(){
             inOrder(root);
+            cout << endl;
         }
         void inOrder(Node *node){
             if(node != NULL){
@@ -110,6 +113,7 @@ class BinarySearchTree{
         }
         void postOrder(){
             postOrder(root);
+            cout << endl;
         }
         void postOrder(Node *node){
             if(node != NULL){
@@ -134,6 +138,9 @@ class BinarySearchTree{
                 return NULL;
             }
         }
+        Node* findMin(){
+            return findMin(root);
+        }
         Node* findMin(Node *node){
             if(node == NULL){
                 return NULL;
@@ -143,37 +150,122 @@ class BinarySearchTree{
                 return findMin(node->left);
             }
         }
+        Node* findMax(){
+            return findMax(root);
+        }
+        Node* findMax(Node *node){
+            if(node == NULL){
+                return NULL;
+            }else if(node->right == NULL){
+                return node;
+            }else{
+                return findMax(node->right);
+            }
+        }
+        int height(){
+            return height(root);
+        }
+        int height(Node *node){
+            if(node == NULL){
+                return -1;
+            }else{
+                int leftHeight = height(node->left);
+                int rightHeight = height(node->right);
+                if(leftHeight > rightHeight){
+                    return leftHeight + 1;
+                }else{
+                    return rightHeight + 1;
+                }
+            }
+        }
+        int size (){
+            return size(root);
+        }
+        int size(Node *node){
+            if(node == NULL){
+                return 0;
+            }else{
+                return size(node->left) + 1 + size(node->right);
+            }
+        }
+        int deselectAfter(){
+            return countNodes(root);
+        }
+        int countNodes(Node *node){
+            if(node == NULL || (node->left == NULL && node->right == NULL)){
+                return 0;
+            }else if(node->left != NULL && node->right != NULL){
+                return 1 + countNodes(node->left) + countNodes(node->right);
+            }else{
+                return countNodes(node->left) + countNodes(node->right);
+            }
+        }
+
 };
 int main(){
     BinarySearchTree bst = BinarySearchTree();
-    bool run = false;
+    bool run = true;
+    // test cases
     if (!run){
-        bst.insert(10);
         bst.insert(5);
-        bst.insert(15);
         bst.insert(3);
-        bst.insert(7);
-        bst.insert(12);
-        bst.insert(17);
         bst.insert(1);
         bst.insert(4);
+        bst.insert(7);
+        bst.insert(6);
+        bst.insert(8);
         bst.display();
-        bst.remove(17);
+        cout << "countNodes: "<<bst.deselectAfter() << endl;
+        cout << "size: "<<bst.size() << endl;
+        cout << "height: "<<bst.height() << endl;
+        cout << "findMin: "<<bst.findMin()->data << endl;
+        cout << "findMax: "<<bst.findMax()->data << endl;
+        cout << "search: "<<bst.search(8)->data << endl;
+        cout << "search: "<<bst.search(9)->data << endl;
         bst.display();
-        cout << endl;
         bst.preOrder();
-        cout << endl;
         bst.inOrder();
-        cout << endl;
         bst.postOrder();
-        cout << endl;
-        if(bst.search(5) != NULL){
-            cout << "Found" << endl;
-        }else{
-            cout << "Not Found" << endl;
-        }
+        bst.remove(1);
+        bst.display();
+        bst.preOrder();
+        bst.inOrder();
+        bst.postOrder();
+        bst.remove(3);
+        bst.display();
+        bst.preOrder();
+        bst.inOrder();
+        bst.postOrder();
+        bst.remove(5);
+        bst.display();
+        bst.preOrder();
+        bst.inOrder();
+        bst.postOrder();
+        bst.remove(4);
+        bst.display();
+        bst.preOrder();
+        bst.inOrder();
+        bst.postOrder();
+        bst.remove(6);
+        bst.display();
+        bst.preOrder();
+        bst.inOrder();
+        bst.postOrder();
+        bst.remove(7);
+        bst.display();
+        bst.preOrder();
+        bst.inOrder();
+        bst.postOrder();
+        bst.remove(8);
+        bst.display();
+        bst.preOrder();
+        bst.inOrder();
+        bst.display();
+        bst.postOrder();
+        run = true;
 
     }
+    // Program
     int choice, data;
     while (run){
         cout << "1. Insert" << endl;
