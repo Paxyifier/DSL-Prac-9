@@ -85,7 +85,7 @@ class Graph {
         for (int i=1; i<=nodes; i++) {
             for (int j=1; j<=nodes; j++) {
                 if (temp == NULL) {
-                    cout<<"Y ";
+                    cout<<"0 ";
                     continue;
                 }
                 if (temp->node1 == i && temp->node2 == j) {
@@ -93,7 +93,7 @@ class Graph {
                     temp = temp->next;
                 }
                 else {
-                    cout<<"X ";
+                    cout<<"0 ";
                 }
             }
             cout<<endl;
