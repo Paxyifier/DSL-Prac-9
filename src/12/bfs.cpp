@@ -136,51 +136,62 @@ class Graph {
 };
 
 int main() {
-    //generate test graph
-    Graph *graph = new Graph(7);
-    graph->addTerm(1,2);
-    graph->addTerm(1,4);
-    graph->addTerm(2,1);
-    graph->addTerm(2,3);
-    graph->addTerm(2,5);
-    graph->addTerm(3,5);
-    graph->addTerm(3,6);
-    graph->addTerm(3,7);
-    graph->addTerm(4,1);
-    graph->addTerm(4,5);
-    graph->addTerm(5,2);
-    graph->addTerm(5,4);
-    graph->addTerm(5,6);
-    graph->addTerm(6,3);
-    graph->addTerm(6,5);
-    graph->addTerm(6,7);
-    graph->addTerm(7,3);
-    graph->addTerm(7,6);
-    //print graph
-    graph->print();
-    //bfs
-    cout<<"bfs:"<<endl;
-    int *visited = graph->bfs(1);
-    graph->printArray(visited, 1, 7);
-    // cout << "Graph" << endl;
-    // cout << "Enter number of Nodes in the graph: ";
-    // int nodes;
-    // cin >> nodes;
-    // cout << "Enter number of nodes: ";
-    // Graph s = Graph(nodes);
-    // cout << "Enter number of edges: ";
-    // int edges;
-    // cin >> edges;
-    // for (int i=0; i<edges; i++) {
-    //     cout << "Enter node1: ";
-    //     int node1;
-    //     cin >> node1;
-    //     cout << "Enter node2: ";
-    //     int node2;
-    //     cin >> node2;
-    //     s.addTerm(node1,node2);
-    // }
-    // s.print();
-    // s.bfs(2);
+    bool test = false;
+    if (test){
+        Graph *graph = new Graph(7);
+        graph->addTerm(1,2);
+        graph->addTerm(1,4);
+        graph->addTerm(2,1);
+        graph->addTerm(2,3);
+        graph->addTerm(2,5);
+        graph->addTerm(3,5);
+        graph->addTerm(3,6);
+        graph->addTerm(3,7);
+        graph->addTerm(4,1);
+        graph->addTerm(4,5);
+        graph->addTerm(5,2);
+        graph->addTerm(5,4);
+        graph->addTerm(5,6);
+        graph->addTerm(6,3);
+        graph->addTerm(6,5);
+        graph->addTerm(6,7);
+        graph->addTerm(7,3);
+        graph->addTerm(7,6);
+        //print graph
+        graph->print();
+        //bfs
+        cout<<"bfs:"<<endl;
+        int *visited = graph->bfs(1);
+        graph->printArray(visited, 1, 7);
+        exit(0);
+    }
+    cout << "Graph" << endl;
+    cout << "Enter number of Nodes in the graph: ";
+    int nodes;
+    cin >> nodes;
+    Graph s = Graph(nodes);
+    cout << "Enter number of edges: ";
+    int edges;
+    cin >> edges;
+    for (int i=0; i<edges; i++) {
+        cout << "Enter node1: ";
+        int node1;
+        cin >> node1;
+        cout << "Enter node2: ";
+        int node2;
+        cin >> node2;
+        s.addTerm(node1,node2);
+    }
+    s.print();
+    int *visited = s.bfs(2);
+    cout << "BFS: ";
+    s.printArray(visited, 1, nodes);
     return 0;
 }
+
+
+
+
+
+
+
