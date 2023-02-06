@@ -1,95 +1,98 @@
 #include <iostream>
 using namespace std;
-class Edge;
-class Node {
-public:
+class Node{
+    public:
     int data;
     Node *next;
-    Edge *edges;
-    Node(int data) {
+    Node(int data,Node *next=NULL){
         this->data = data;
+        if (next != NULL){
+            this->next = next;
+        }
     }
 };
-class Edge {
+class Term{
     public:
-    Node *node;
-    Edge *next;
-    Edge(Node *node) {
-        this->node = node;
-        next = NULL;
+    int node1,node2,value=1;
+    Term *next;
+    Term(int node1,int node2,Term *next=NULL){
+        this->node1 = node1;
+        this->node2 = node2;
+        if (next != NULL){
+            this->next = next;
+        }
     }
 };
 class Graph {
     public:
-    Node *nodes;
-
-    Graph() {
-        nodes = NULL;
+    Term *head;
+    int nodes;
+    Graph(int nodes){
+        this->nodes = nodes;
+        head = NULL;
     }
-    void addNode(int data) {
-        Node *node = new Node(data);
-        if (nodes == NULL) {
-            nodes = node;
-        } else {
-            Node *current = nodes;
-            while (current->next != NULL) {
-                current = current->next;
+    void addTerm(int node1,int node2){
+        if (head == NULL){
+            head = new Term(node1,node2);
+        }
+        else{
+            Term *temp = head;
+            while(temp->next != NULL){
+                temp = temp->next;
             }
-            current->next = node;
+            temp->next = new Term(node1,node2);
         }
     }
-    void addEdge(int data1, int data2) {
-        Node *node1 = findNode(data1);
-        Node *node2 = findNode(data2);
-        if (node1 != NULL && node2 != NULL) {
-            Edge *edge = new Edge(node2);
-            if (node1->edges == NULL) {
-                node1->edges = edge;
-            } else {
-                Edge *current = node1->edges;
-                while (current->next != NULL) {
-                    current = current->next;
+    void print(){
+        Term *temp = head;
+        for (int i=1; i<=nodes; i++) {
+            for (int j=1; j<=nodes; j++) {
+                if (temp == NULL) {
+                    cout<<"0 ";
+                    continue;
                 }
-                current->next = edge;
+                if (temp->node1 == i && temp->node2 == j) {
+                    cout<<temp->value<<" ";
+                    temp = temp->next;
+                }
+                else {
+                    cout<<"0 ";
+                }
             }
+            cout<<endl;
         }
     }
-    Node *findNode(int data) {
-        Node *current = nodes;
-        while (current != NULL) {
-            if (current->data == data) {
-                return current;
-            }
-            current = current->next;
-        }
-        return NULL;
-    }
-    void print() {
-        Node *current = nodes;
-        while (current != NULL) {
-            cout << current->data << ": ";
-            Edge *edge = current->edges;
-            while (edge != NULL) {
-                cout << edge->node->data << " ";
-                edge = edge->next;
-            }
-            cout << endl;
-            current = current->next;
-        }
-    }
-    
 };
+
 int main() {
-    Graph graph;
-    graph.addNode(1);
-    graph.addNode(2);
-    graph.addNode(3);
-    graph.addNode(4);
-    graph.addNode(5);
-    graph.addEdge(1, 2);
-    graph.addEdge(1, 3);
-    graph.addEdge(2, 4);
-    graph.addEdge(2, 5);
-    graph.print();
+    cout << "Graph" << endl;
+    cout << "Enter number of Nodes in the graph: ";
+    int nodes;
+    cin >> nodes;
+    Graph s = Graph(nodes);
+    cout << "Enter number of edges: ";
+    int edges;
+    cin >> edges;
+    for (int i=0; i<edges; i++) {
+        cout << "Enter node1: ";
+        int node1;
+        cin >> node1;
+        cout << "Enter node2: ";
+        int node2;
+        cin >> node2;
+        s.addTerm(node1,node2);
+    }
+    s.print();
     return 0;
 }
+
+    // graph.addNode(1);
+    // graph.addNode(2);
+    // graph.addNode(3);
+    // graph.addNode(4);
+    // graph.addNode(5);
+    // graph.addEdge(1, 2);
+    // graph.addEdge(1, 3);
+    // graph.addEdge(2, 4);
+    // graph.addEdge(2, 5);
+    // graph.print();
