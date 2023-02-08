@@ -1,47 +1,82 @@
 #include <iostream>
-template <typename T>
-class Node{
-    T data;
-    Node<T> *next;
-    Node(T data){
-        this->data = data;
-        this->next = NULL;
-    }
-    Node(T data, Node<T> *next){
-        this->data = data;
-        this->next = next;
-    }
-};
-template <typename T>
-class WeightedEdge{
-    Node<T>* node1;
-    Node<T>* node2;
+using namespace std;
+#include <algorithm>
+class Edge
+{
+public:
+    int source;
+    int dest;
     int weight;
-    WeightedEdge<T>(Node<T> node1, Node<T> node2, int weight){
-        this->node1 = node1;
-        this->node2 = node2;
-        this->weight = weight;
-    }
 };
-
-template <typename T>
-class WeightedGraph{
-    Node<T> *head;
-    WeightedGraph<T>(){
-        this->head = NULL;
+bool compare(Edge e1, Edge e2)
+{
+    return e1.weight < e2.weight;
+}
+int findParent(int v, int *parent)
+{
+    if (parent[v] == v)
+    {
+        return v;
     }
-    void addNode(T data){
-        Node<T> *temp = this->head;
-        if (this->head ==NULL ){
-            this->head = new Node<T>(data);
-            return;
+    return findParent(parent[v], parent);
+}
+void krushkals(Edge *input, int n, int E)
+{
+    //sort the input array - ascending order based on weights
+    sort(input, input + E, compare);
+    Edge *output = new Edge[n - 1];
+    int *parent = new int[n];
+    for (int i = 0; i < n; i++)
+    {
+        parent[i] = i;
+    }
+    int count = 0;
+    int i = 0;
+    while (count != n - 1)
+    {
+        Edge currentEdge = input[i];
+        //check if we can add the current edge in MST or not
+        int sourceParent = findParent(currentEdge.source, parent);
+        int destParent = findParent(currentEdge.dest, parent);
+        if (sourceParent != destParent)
+        {
+            output[count] = currentEdge;
+            count++;
+            parent[sourceParent] = destParent;
         }
-        while (temp->next!=NULL){
-            temp = temp->next;
+        i++;
+    }
+    cout << "Minimum Spanning Tree : -" << endl;
+    for (int i = 0; i < n - 1; i++)
+    {
+        if (output[i].source < output[i].dest)
+        {
+            cout << output[i].source << " " << output[i].dest << " "
+                 << output[i].weight << endl;
         }
-        temp->next = new Node<T>(data);
+        else
+        {
+            cout << output[i].dest << " " << output[i].source << " "
+                 << output[i].weight << endl;
+        }
     }
-    void addEdge(T data1, T data2, int weight){
-        
+}
+int main()
+{
+    int n, E;
+    cout << "KRUSKAL'S ALGORITHM\nENTER NUMBER OF VERTICES : ";
+    cin >> n;
+    cout << "ENTER NUMBER OF EDGEES : ";
+    cin >> E;
+    Edge *input = new Edge[E];
+    for (int i = 0; i < E; i++)
+    {
+        int s, d, w;
+        cout << "ENTER VERTICES AND WEIGHT OF EDGE " << i + 1 << " : ";
+        cin >> s >> d >> w;
+        input[i].source = s;
+        input[i].dest = d;
+        input[i].weight = w;
     }
-};
+    krushkals(input, n, E);
+}
